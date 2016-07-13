@@ -1,0 +1,8 @@
+## Interface: 60200
+## Title: Shammy Says
+## Notes: Say how long abilities are up for!
+## Author: Semiceri of Aggramar
+## Version: 0.1
+## DefaultState: Enabled
+
+ShamanSays.lua
