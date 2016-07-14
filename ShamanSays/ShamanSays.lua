@@ -6,27 +6,35 @@
 --
 
 --function that should be swapped out
-local print = function(msg)
+local print = function (msg)
     DEFAULT_CHAT_FRAME:AddMessage(msg)
 end
 
-isCasting = false
+is_casting = false
 SpellTrackerFunctions = { }
 
---event registration
 SpellTracker = CreateFrame("Frame", nil, UIParent)
-SpellTracker:RegisterEvent("UNIT_SPELLCAST_SUCCEDED")
+SpellTracker:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 SpellTracker:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
 SpellTracker:RegisterEvent("UNIT_SPELLCAST_FAILED")
 SpellTracker:RegisterEvent("UNIT_SPELLCAST_START")
-SpellTracker:SetScript("OnEvent", function(_,e) SpellTrackerFunctions[e] () end)
+SpellTracker:SetScript("OnEvent", function (_,e) SpellTrackerFunctions[e]() end)
 
-function SpellTrackerFunctions.UNIT_SPELLCAST_SUCCEDED()
+----
+function SpellTrackerFunctions.UNIT_SPELLCAST_SUCCEEDED(...)
+    local unitID, spell, rank, lineID, spellID = select(1, ...)
     if not is_casting then
-        --figure out how to get spell name here
-        print()
+        print("instant cast spell")
     end
-
+    is_casting = false
+end
+----
+function SpellTrackerFunctions.UNIT_SPELLCAST_START()
+    is_casting = true
+end
+----
+function SpellTrackerFunctions.UNIT_SPELLCAST_FAILED()
+    is_casting = false
 end
 
 
