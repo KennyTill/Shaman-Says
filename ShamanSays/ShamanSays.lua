@@ -6,40 +6,30 @@
 --
 
 --leaving these here could cause syncing issues
-local capTotemPlaced, capTotemTimer, capTotemCoundown = false, 0, 5
-
 
 --TODO: update this function for say chat
 local print = function (msg)
     DEFAULT_CHAT_FRAME:AddMessage(msg)
+    --SendChatMessage(msg, "SAY")
 end
 
 local function spellcastSuccededEvent(self, event, ...)
     local unitID, spell, rank, lineID, spellID = ...;
     --Find abilities here
     if (spell == "Capacitor Totem") then
-        capTotemPlaced = true
+        -- import ace 3 and use it here for timer functionality
     end
 end
 
 
---I feel like this is a bad idea but lets do it anyway
+--reserved for ui update polling
 local function onUpdate(self, elapsed)
-    if capTotemPlaced then
-        capTotemTimer = capTotemTimer + elapsed
-        if capTotemTimer >= 1 then
-            print(capTotemCoundown)
-            capTotemCoundown = capTotemCoundown - 1
-            capTotemTimer = 0
-        end
-        if capTotemCoundown <= 0 then
-            capTotemPlaced = false
-        end
-    end
+
 end
 
-local frame = CreateFrame("FRAME", "ShammyFrame");
-frame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+
+local shammyDummyFrame = CreateFrame("FRAME", "ShammyFrame");
+shammyDummyFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 
 
 --passthough function for all events
@@ -49,5 +39,5 @@ local function eventTriggered(self, event, ...)
     end
 end
 
-frame:SetScript("OnEvent", eventTriggered)
-
+shammyDummyFrame:SetScript("OnEvent", eventTriggered)
+shammyDummyFrame:SetScript("OnUpdate", onUpdate)
