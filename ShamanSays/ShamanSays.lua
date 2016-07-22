@@ -5,39 +5,27 @@
 -- Time: 1:36 PM
 --
 
---leaving these here could cause syncing issues
 
---TODO: update this function for say chat
-local print = function (msg)
-    DEFAULT_CHAT_FRAME:AddMessage(msg)
-    --SendChatMessage(msg, "SAY")
-end
+ShamanSays = LibStub("AceAddon-3.0"):NewAddon("ShamanSays", "AceConsole-3.0", "AceEvent-3.0")
 
-local function spellcastSuccededEvent(self, event, ...)
+function ShamanSays:UNIT_SPELLCAST_SUCCEEDED(...)
+    self:Print("spellcast event caught!")
     local unitID, spell, rank, lineID, spellID = ...;
     --Find abilities here
-    if (spell == "Capacitor Totem") then
-        -- import ace 3 and use it here for timer functionality
+    if (spell == "Healing Surge") then
+       self:Print(spell)
     end
 end
 
-
---reserved for ui update polling
-local function onUpdate(self, elapsed)
-
+function ShamanSays:HandleChatCommandFunc(input)
+    --if branch to update stuff here
+    self:Print("TODO: Add slash functionality")
 end
 
 
-local shammyDummyFrame = CreateFrame("FRAME", "ShammyFrame");
-shammyDummyFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-
-
---passthough function for all events
-local function eventTriggered(self, event, ...)
-    if event == "UNIT_SPELLCAST_SUCCEEDED" then
-        spellcastSuccededEvent(self, event, ...)
-    end
+function ShamanSays:OnInitialize()
+    --registers for slash commands
+    ShamanSays:RegisterChatCommand("shamansays", "HandleChatCommandFunc",true)
+    --registers for events
+    ShamanSays:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 end
-
-shammyDummyFrame:SetScript("OnEvent", eventTriggered)
-shammyDummyFrame:SetScript("OnUpdate", onUpdate)

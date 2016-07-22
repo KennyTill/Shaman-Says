@@ -1,8 +1,9 @@
-## Interface: 60200
-## Title: Shammy Says
+## Interface: 70000
+## Title: Shaman Says
 ## Notes: Say how long abilities are up for!
 ## Author: Semiceri of Aggramar
 ## Version: 0.1
 ## DefaultState: Enabled
 
+embeds.xml
 ShamanSays.lua
